@@ -1,6 +1,6 @@
 
 
-import { handleLogin, fetchAndRenderConversations, handleLogout, handleConversationClick, handleBackToMain, handleSendMessage, handleMessageInput, handleAttachment, handleAttachmentClick, handleCloseMediaPreview, handleSendMedia, handleMoreOptions, openCurrentUserProfile, handleProfileBack, handleSendMessageFromProfile, handleShowAllMedia, handleAllMediaBack, renderMyProfile, handleMyProfileBack, handleMessageLongPress, handleMessageOptionClick, loadCallLogs, handleBlockUser, handleUnblockUser, handleReportChat } from './handlers.js';
+import { handleLogin, fetchAndRenderConversations, handleLogout, handleConversationClick, handleBackToMain, handleSendMessage, handleMessageInput, handleAttachment, handleAttachmentClick, handleCloseMediaPreview, handleSendMedia, handleMoreOptions, openCurrentUserProfile, handleProfileBack, handleSendMessageFromProfile, handleShowAllMedia, handleAllMediaBack, renderMyProfile, handleMyProfileBack, handleMessageLongPress, handleMessageOptionClick, loadCallLogs, handleBlockUser, handleUnblockUser, handleReportChat, fetchAndUpdateCallLogBadge, markAllCallLogsAsRead } from './handlers.js';
 import type { User, Message } from './types.js';
 import { apiFetch } from './api.js';
 import { getCachedConversations } from './cache.js';
@@ -134,10 +134,14 @@ document.addEventListener('DOMContentLoaded', function() {
       dom.loginPage.classList.add('hidden');
       dom.mainPage.classList.remove('hidden');
       fetchAndRenderConversations(false, dom, state); // Initial load (cache-first)
+      fetchAndUpdateCallLogBadge(); // Load call log badge count
 
       // Start background sync
       if (state.backgroundSyncIntervalId) clearInterval(state.backgroundSyncIntervalId);
-      state.backgroundSyncIntervalId = window.setInterval(() => fetchAndRenderConversations(true, dom, state), 60000);
+      state.backgroundSyncIntervalId = window.setInterval(() => {
+        fetchAndRenderConversations(true, dom, state);
+        fetchAndUpdateCallLogBadge(); // Update badge count periodically
+      }, 60000);
 
     } else {
       dom.loginPage.classList.remove('hidden');
@@ -506,6 +510,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (dom.notificationsPage) dom.notificationsPage.classList.remove('hidden');
                 if (dom.bottomNav) dom.bottomNav.classList.add('hidden');
                 loadCallLogs(dom, state);
+                markAllCallLogsAsRead(); // Mark all as read when opening call logs page
             } else if (tab === 'my-profile') {
                 dom.mainPage.classList.add('hidden');
                 if (dom.myProfilePage) dom.myProfilePage.classList.remove('hidden');
@@ -726,6 +731,7 @@ document.addEventListener('DOMContentLoaded', function() {
           })
         }).then(() => {
             console.log('✅ Call log updated successfully in background');
+            fetchAndUpdateCallLogBadge(); // Update badge after call ends
         }).catch((error: any) => {
             console.error('❌ Error updating call log in background:', error);
             // No user-facing error needed here as the UI has already moved on.
@@ -760,6 +766,7 @@ document.addEventListener('DOMContentLoaded', function() {
           })
         }).then(() => {
             console.log('✅ Video call log updated successfully in background');
+            fetchAndUpdateCallLogBadge(); // Update badge after call ends
         }).catch((error: any) => {
             console.error('❌ Error updating video call log in background:', error);
         });

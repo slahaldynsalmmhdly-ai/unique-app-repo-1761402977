@@ -1323,3 +1323,53 @@ export async function handleReportChat(targetId: string) {
         showLoginError('فشل إرسال البلاغ: ' + error.message);
     }
 }
+
+}
+
+// --- NEW: Call Log Badge Functions ---
+
+/**
+ * Fetch unread call count from API and update badge
+ */
+export async function fetchAndUpdateCallLogBadge() {
+    try {
+        const response = await apiFetch('/api/v1/call-logs/unread-count');
+        const count = response.count || 0;
+        updateCallLogBadge(count);
+    } catch (error: any) {
+        console.error('❌ Error fetching unread call count:', error);
+        // Silently fail - don't show error to user
+    }
+}
+
+/**
+ * Update the call log badge UI
+ */
+export function updateCallLogBadge(count: number) {
+    const badge = document.getElementById('callLogBadge');
+    if (!badge) return;
+    
+    if (count > 0) {
+        badge.textContent = count > 99 ? '99+' : count.toString();
+        badge.classList.remove('hidden');
+    } else {
+        badge.classList.add('hidden');
+    }
+}
+
+/**
+ * Mark all call logs as read and hide badge
+ */
+export async function markAllCallLogsAsRead() {
+    try {
+        await apiFetch('/api/v1/call-logs/mark-all-read', {
+            method: 'PUT'
+        });
+        updateCallLogBadge(0);
+        console.log('✅ All call logs marked as read');
+    } catch (error: any) {
+        console.error('❌ Error marking call logs as read:', error);
+        // Silently fail
+    }
+}
+
