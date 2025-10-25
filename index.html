@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ماسنجر</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<link rel="stylesheet" href="/styles.css">
+<script>
+tailwind.config = {
+theme: {
+extend: {
+colors: {
+primary: '#007AFF',
+secondary: '#34C759'
+},
+borderRadius: {
+'none': '0px',
+'sm': '4px',
+DEFAULT: '8px',
+'md': '12px',
+'lg': '16px',
+'xl': '20px',
+'2xl': '24px',
+'3xl': '32px',
+'full': '9999px',
+'button': '8px'
+}
+}
+}
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-white min-h-screen">
+<!-- صفحة تسجيل الدخول -->
+<div id="loginPage" class="w-full bg-gradient-to-br from-primary via-blue-600 to-secondary min-h-screen relative overflow-hidden">
+<!-- خلفية متحركة -->
+<div class="absolute inset-0">
+<div class="absolute top-10 right-10 w-32 h-32 bg-white bg-opacity-10 rounded-full animate-pulse"></div>
+<div class="absolute top-40 left-5 w-20 h-20 bg-white bg-opacity-5 rounded-full animate-bounce" style="animation-delay: 1s;"></div>
+<div class="absolute bottom-32 right-20 w-24 h-24 bg-white bg-opacity-10 rounded-full animate-pulse" style="animation-delay: 2s;"></div>
+<div class="absolute bottom-20 left-10 w-16 h-16 bg-white bg-opacity-5 rounded-full animate-bounce" style="animation-delay: 0.5s;"></div>
+</div>
+
+<!-- المحتوى الرئيسي -->
+<div class="relative z-10 flex flex-col justify-center min-h-screen px-8">
+<!-- الشعار والعنوان -->
+<div class="text-center mb-12 animate-fadeIn">
+<div class="w-20 h-20 bg-white bg-opacity-20 backdrop-blur-sm rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl">
+<h1 class="text-2xl font-['Pacifico'] text-white">logo</h1>
+</div>
+<h2 class="text-3xl font-bold text-white mb-2">مرحباً بك</h2>
+<p class="text-white text-opacity-80 text-lg">سجل دخولك للمتابعة</p>
+</div>
+
+<!-- نموذج تسجيل الدخول -->
+<div class="space-y-6 animate-slideInUp" style="animation-delay: 0.3s;">
+<!-- البريد الإلكتروني -->
+<div class="relative">
+<div class="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 flex items-center justify-center">
+<i class="ri-mail-line text-gray-400"></i>
+</div>
+<input 
+  type="email" 
+  id="loginEmail" 
+  placeholder="البريد الإلكتروني" 
+  class="w-full bg-white bg-opacity-10 backdrop-blur-sm border border-white border-opacity-20 rounded-2xl py-4 pr-12 pl-4 text-white placeholder-white placeholder-opacity-70 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-30 focus:border-white focus:border-opacity-50 transition-all duration-300"
+>
+<div class="absolute inset-0 bg-white bg-opacity-5 rounded-2xl pointer-events-none transition-all duration-300 focus-within:bg-opacity-10"></div>
+</div>
+
+<!-- كلمة المرور -->
+<div class="relative">
+<div class="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 flex items-center justify-center">
+<i class="ri-lock-line text-gray-400"></i>
+</div>
+<div class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 flex items-center justify-center cursor-pointer" id="togglePassword">
+<i class="ri-eye-off-line text-gray-400 text-sm"></i>
+</div>
+<input 
+  type="password" 
+  id="loginPassword" 
+  placeholder="كلمة المرور" 
+  class="w-full bg-white bg-opacity-10 backdrop-blur-sm border border-white border-opacity-20 rounded-2xl py-4 pr-12 pl-12 text-white placeholder-white placeholder-opacity-70 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-30 focus:border-white focus:border-opacity-50 transition-all duration-300"
+>
+<div class="absolute inset-0 bg-white bg-opacity-5 rounded-2xl pointer-events-none transition-all duration-300 focus-within:bg-opacity-10"></div>
+</div>
+
+<!-- خيارات إضافية -->
+<div class="flex items-center justify-between text-sm">
+<label class="flex items-center text-white text-opacity-80 cursor-pointer">
+<input type="checkbox" id="rememberMe" class="sr-only">
+<div class="relative">
+<div class="w-5 h-5 bg-white bg-opacity-20 border border-white border-opacity-30 rounded transition-all duration-200"></div>
+<div class="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200" id="checkIcon">
+<i class="ri-check-line text-white text-xs"></i>
+</div>
+</div>
+<span class="mr-3">تذكرني</span>
+</label>
+<a href="#" class="text-white text-opacity-80 hover:text-opacity-100 transition-all duration-200">نسيت كلمة المرور؟</a>
+</div>
+
+<!-- زر تسجيل الدخول -->
+<button 
+  id="loginBtn" 
+  class="w-full bg-white text-primary font-bold py-4 rounded-2xl hover:bg-opacity-90 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-30 transition-all duration-300 transform hover:scale-105 shadow-2xl !rounded-button"
+>
+<span id="loginBtnText">تسجيل الدخول</span>
+<div id="loginLoader" class="hidden flex items-center justify-center">
+<div class="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin ml-2"></div>
+<span>جاري تسجيل الدخول...</span>
+</div>
+</button>
+
+<!-- رابط إنشاء حساب -->
+<div class="text-center pt-6">
+<p class="text-white text-opacity-80">
+ليس لديك حساب؟ 
+<a href="#" class="text-white font-semibold hover:underline transition-all duration-200">إنشاء حساب جديد</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- الصفحة الرئيسية -->
+<div id="mainPage" class="w-full bg-white min-h-screen relative hidden">
+<!-- المحتوى الرئيسي -->
+<main class="pb-20 px-4 pt-4">
+<!-- العنوان والأيقونة -->
+<div class="flex justify-between items-center mb-6">
+<h1 class="text-2xl font-bold text-gray-900">الدردشات</h1>
+<div class="w-10 h-10 flex items-center justify-center bg-gray-100 rounded-full opacity-50 cursor-not-allowed">
+<i class="ri-truck-line text-gray-400 text-lg"></i>
+</div>
+</div>
+<!-- شريط البحث -->
+<div class="relative mb-6">
+<div class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 flex items-center justify-center">
+<i class="ri-search-line text-gray-400 text-sm"></i>
+</div>
+<input type="text" placeholder="البحث في الدردشات..." class="w-full bg-gray-50 border-none rounded-full py-3 pr-12 pl-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20">
+</div>
+<!-- المتصلين حالياً -->
+<div class="mb-6">
+<div class="flex gap-3 overflow-x-auto scrollbar-hide pb-2">
+<div class="flex flex-col items-center min-w-fit cursor-pointer">
+<div class="relative">
+<img src="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20young%20Middle%20Eastern%20man%20with%20friendly%20smile%2C%20business%20casual%20attire%2C%20clean%20background%2C%20high%20quality%20portrait%20photography%2C%20natural%20lighting&width=60&height=60&seq=user1&orientation=squarish" alt="أحمد محمد" class="w-14 h-14 rounded-full object-cover border-2 border-secondary">
+<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-secondary rounded-full border-2 border-white"></div>
+</div>
+<span class="text-xs text-gray-600 mt-1 max-w-14 truncate">أحمد محمد</span>
+</div>
+<div class="flex flex-col items-center min-w-fit cursor-pointer">
+<div class="relative">
+<img src="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20young%20Middle%20Eastern%20woman%20with%20hijab%2C%20friendly%20smile%2C%20business%20casual%20attire%2C%20clean%20background%2C%20high%20quality%20portrait%20photography%2C%20natural%20lighting&width=60&height=60&seq=user2&orientation=squarish" alt="فاطمة علي" class="w-14 h-14 rounded-full object-cover border-2 border-secondary">
+<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-secondary rounded-full border-2 border-white"></div>
+</div>
+<span class="text-xs text-gray-600 mt-1 max-w-14 truncate">فاطمة علي</span>
+</div>
+<div class="flex flex-col items-center min-w-fit cursor-pointer">
+<div class="relative">
+<img src="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20young%20Middle%20Eastern%20man%20with%20beard%2C%20friendly%20smile%2C%20business%20casual%20attire%2C%20clean%20background%2C%20high%20quality%20portrait%20photography%2C%20natural%20lighting&width=60&height=60&seq=user3&orientation=squarish" alt="محمد حسن" class="w-14 h-14 rounded-full object-cover border-2 border-secondary">
+<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-secondary rounded-full border-2 border-white"></div>
+</div>
+<span class="text-xs text-gray-600 mt-1 max-w-14 truncate">محمد حسن</span>
+</div>
+<div class="flex flex-col items-center min-w-fit cursor-pointer">
+<div class="relative">
+<img src="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20young%20Middle%20Eastern%20woman%2C%20friendly%20smile%2C%20business%20casual%20attire%2C%20clean%20background%2C%20high%20quality%20portrait%20photography%2C%20natural%20lighting&width=60&height=60&seq=user4&orientation=squarish" alt="نور أحمد" class="w-14 h-14 rounded-full object-cover border-2 border-secondary">
+<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-secondary rounded-full border-2 border-white"></div>
+</div>
+<span class="text-xs text-gray-600 mt-1 max-w-14 truncate">نور أحمد</span>
+</div>
+<div class="flex flex-col items-center min-w-fit cursor-pointer">
+<div class="relative">
+<img src="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20young%20Middle%20Eastern%20man%20with%20glasses%2C%20friendly%20smile%2C%20business%20casual%20attire%2C%20clean%20background%2C%20high%20quality%20portrait%20photography%2C%20natural%20lighting&width=60&height=60&seq=user5&orientation=squarish" alt="عبدالله سالم" class="w-14 h-14 rounded-full object-cover border-2 border-secondary">
+<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-secondary rounded-full border-2 border-white"></div>
+</div>
+<span class="text-xs text-gray-600 mt-1 max-w-14 truncate">عبدالله سالم</span>
+</div>
+</div>
+</div>
+<!-- قائمة المحادثات -->
+<!-- المحادثات النشطة -->
+<div class="space-y-1">
+<div class="chat-item flex items-center p-3 rounded-lg hover:bg-gray-50 cursor-pointer" data-user="أحمد محمد" data-avatar="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20young%20Middle%20Eastern%20man%20with%20friendly%20smile%2C%20business%20casual%20attire%2C%20clean%20background%2C%20high%20quality%20portrait%20photography%2C%20natural%20lighting&width=60&height=60&seq=user1&orientation=squarish">
+<div class="relative ml-3">
+<img src="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20young%20Middle%20Eastern%20man%20with%20friendly%20smile%2C%20business%20casual%20attire%2C%20clean%20background%2C%20high%20quality%20portrait%20photography%2C%20natural%20lighting&width=60&height=60&seq=user1&orientation=squarish" alt="أحمد محمد" class="w-12 h-12 rounded-full object-cover">
+<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-secondary rounded-full border-2 border-white"></div>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-semibold text-gray-900">أحمد محمد</h3>
+<span class="text-xs text-gray-500">الآن</span>
+</div>
+<p class="text-sm text-gray-600 truncate">مرحباً، كيف حالك اليوم؟</p>
+</div>
+<div class="w-2 h-2 bg-primary rounded-full mr-2"></div>
+</div>
+<div class="chat-item flex items-center p-3 rounded-lg hover:bg-gray-50 cursor-pointer" data-user="فاطمة علي" data-avatar="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20young%20Middle%20Eastern%20woman%20with%20hijab%2C%20friendly%20smile%2C%20business%20casual%20attire%2C%20clean%20background%2C%20high%20quality%20portrait%20photography%2C%20natural%20lighting&width=60&height=60&seq=user2&orientation=squarish">
+<div class="relative ml-3">
+<img src="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20young%20Middle%20Eastern%20woman%20with%20hijab%2C%20friendly%20smile%2C%20business%20casual%20attire%2C%20clean%20background%2C%20high%20quality%20portrait%20photography%2C%20natural%20lighting&width=60&height=60&seq=user2&orientation=squarish" alt="فاطمة علي" class="w-12 h-12 rounded-full object-cover">
+<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-secondary rounded-full border-2 border-white"></div>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-semibold text-gray-900">فاطمة علي</h3>
+<span class="text-xs text-gray-500">منذ 5 دقائق</span>
+</div>
+<p class="text-sm text-gray-600 truncate">شكراً لك على المساعدة</p>
+</div>
+</div>
+<div class="chat-item flex items-center p-3 rounded-lg hover:bg-gray-50 cursor-pointer" data-user="محمد حسن" data-avatar="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20young%20Middle%20Eastern%20man%20with%20beard%2C%20friendly%20smile%2C%20business%20casual%20attire%2C%20clean%20background%2C%20high%20quality%20portrait%20photography%2C%20natural%20lighting&width=60&height=60&seq=user3&orientation=squarish">
+<div class="relative ml-3">
+<img src="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20young%20Middle%20Eastern%20man%20with%20beard%2C%20friendly%20smile%2C%20business%20casual%20attire%2C%20clean%20background%2C%20high%20quality%20portrait%20photography%2C%20natural%20lighting&width=60&height=60&seq=user3&orientation=squarish" alt="محمد حسن" class="w-12 h-12 rounded-full object-cover">
+<div class="absolute -bottom-1 -right-1 w-3 h-3 bg-gray-400 rounded-full border-2 border-white"></div>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-medium text-gray-700">محمد حسن</h3>
+<span class="text-xs text-gray-500">منذ 30 دقيقة</span>
+</div>
+<p class="text-sm text-gray-500 truncate">سأراسلك لاحقاً</p>
+</div>
+</div>
+<div class="chat-item flex items-center p-3 rounded-lg hover:bg-gray-50 cursor-pointer" data-user="نور أحمد" data-avatar="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20young%20Middle%20Eastern%20woman%2C%20friendly%20smile%2C%20business%20casual%20attire%2C%20clean%20background%2C%20high%20quality%20portrait%20photography%2C%20natural%20lighting&width=60&height=60&seq=user4&orientation=squarish">
+<div class="relative ml-3">
+<img src="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20young%20Middle%20Eastern%20woman%2C%20friendly%20smile%2C%20business%20casual%20attire%2C%20clean%20background%2C%20high%20quality%20portrait%20photography%2C%20natural%20lighting&width=60&height=60&seq=user4&orientation=squarish" alt="نور أحمد" class="w-12 h-12 rounded-full object-cover">
+<div class="absolute -bottom-1 -right-1 w-3 h-3 bg-gray-400 rounded-full border-2 border-white"></div>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-medium text-gray-700">نور أحمد</h3>
+<span class="text-xs text-gray-500">منذ ساعة</span>
+</div>
+<p class="text-sm text-gray-500 truncate">تم إرسال صورة</p>
+</div>
+</div>
+<div class="chat-item flex items-center p-3 rounded-lg hover:bg-gray-50 cursor-pointer" data-user="عبدالله سالم" data-avatar="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20young%20Middle%20Eastern%20man%20with%20glasses%2C%20friendly%20smile%2C%20business%20casual%20attire%2C%20clean%20background%2C%20high%20quality%20portrait%20photography%2C%20natural%20lighting&width=60&height=60&seq=user5&orientation=squarish">
+<div class="relative ml-3">
+<img src="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20young%20Middle%20Eastern%20man%20with%20glasses%2C%20friendly%20smile%2C%20business%20casual%20attire%2C%20clean%20background%2C%20high%20quality%20portrait%20photography%2C%20natural%20lighting&width=60&height=60&seq=user5&orientation=squarish" alt="عبدالله سالم" class="w-12 h-12 rounded-full object-cover">
+<div class="absolute -bottom-1 -right-1 w-3 h-3 bg-gray-400 rounded-full border-2 border-white"></div>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-medium text-gray-700">عبدالله سالم</h3>
+<span class="text-xs text-gray-500">أمس</span>
+</div>
+<p class="text-sm text-gray-500 truncate">موافق، سنتحدث غداً</p>
+</div>
+</div>
+<div class="chat-item flex items-center p-3 rounded-lg hover:bg-gray-50 cursor-pointer" data-user="سارة محمود" data-avatar="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20young%20Middle%20Eastern%20woman%20with%20long%20hair%2C%20friendly%20smile%2C%20business%20casual%20attire%2C%20clean%20background%2C%20high%20quality%20portrait%20photography%2C%20natural%20lighting&width=60&height=60&seq=user6&orientation=squarish">
+<div class="relative ml-3">
+<img src="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20young%20Middle%20Eastern%20woman%20with%20long%20hair%2C%20friendly%20smile%2C%20business%20casual%20attire%2C%20clean%20background%2C%20high%20quality%20portrait%20photography%2C%20natural%20lighting&width=60&height=60&seq=user6&orientation=squarish" alt="سارة محمود" class="w-12 h-12 rounded-full object-cover">
+<div class="absolute -bottom-1 -right-1 w-3 h-3 bg-gray-400 rounded-full border-2 border-white"></div>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-medium text-gray-700">سارة محمود</h3>
+<span class="text-xs text-gray-500">أمس</span>
+</div>
+<p class="text-sm text-gray-500 truncate">شكراً لك على الاجتماع</p>
+</div>
+</div>
+<div class="chat-item flex items-center p-3 rounded-lg hover:bg-gray-50 cursor-pointer" data-user="خالد العمري" data-avatar="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20middle-aged%20Middle%20Eastern%20man%20with%20short%20hair%2C%20friendly%20smile%2C%20business%20casual%20attire%2C%20clean%20background%2C%20high%20quality%20portrait%20photography%2C%20natural%20lighting&width=60&height=60&seq=user7&orientation=squarish">
+<div class="relative ml-3">
+<img src="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20middle-aged%20Middle%20Eastern%20man%20with%20short%20hair%2C%20friendly%20smile%2C%20business%20casual%20attire%2C%20clean%20background%2C%20high%20quality%20portrait%20photography%2C%20natural%20lighting&width=60&height=60&seq=user7&orientation=squarish" alt="خالد العمري" class="w-12 h-12 rounded-full object-cover">
+<div class="absolute -bottom-1 -right-1 w-3 h-3 bg-gray-400 rounded-full border-2 border-white"></div>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-medium text-gray-700">خالد العمري</h3>
+<span class="text-xs text-gray-500">منذ يومين</span>
+</div>
+<p class="text-sm text-gray-500 truncate">تم إرسال ملف</p>
+</div>
+</div>
+</div>
+</main>
+<!-- التنقل السفلي -->
+<nav id="bottomNav" class="fixed bottom-0 w-full bg-white border-t border-gray-100 px-4 py-2">
+<div class="grid grid-cols-3 gap-4">
+<button class="tab-btn active flex flex-col items-center py-2 cursor-pointer !rounded-button" data-tab="individuals">
+<div class="w-6 h-6 flex items-center justify-center mb-1">
+<i class="ri-user-line text-primary text-lg"></i>
+</div>
+<span class="text-xs text-primary font-medium">الأفراد</span>
+</button>
+<button class="tab-btn flex flex-col items-center py-2 cursor-pointer !rounded-button" data-tab="companies">
+<div class="w-6 h-6 flex items-center justify-center mb-1">
+<i class="ri-history-line text-gray-400 text-lg"></i>
+</div>
+<span class="text-xs text-gray-400">السجل</span>
+</button>
+<button class="tab-btn flex flex-col items-center py-2 cursor-pointer !rounded-button" data-tab="my-profile">
+<div class="w-6 h-6 flex items-center justify-center mb-1">
+<i class="ri-user-smile-line text-gray-400 text-lg"></i>
+</div>
+<span class="text-xs text-gray-400">حسابي</span>
+</button>
+</div>
+</nav>
+</div>
+
+<!-- صفحة الإشعارات -->
+<div id="notificationsPage" class="w-full bg-white min-h-screen relative hidden flex flex-col">
+    <!-- Header -->
+    <header class="fixed top-0 w-full bg-white z-50 px-4 py-3 border-b border-gray-100 flex items-center">
+        <button id="notificationsBackBtn" class="w-8 h-8 flex items-center justify-center ml-3 cursor-pointer !rounded-button">
+            <i class="ri-arrow-right-line text-gray-700 text-lg"></i>
+        </button>
+        <h2 class="font-semibold text-gray-900">السجل</h2>
+    </header>
+    <!-- Call Logs List -->
+    <main class="pt-20 pb-4 px-4 flex-1 overflow-y-auto">
+        <!-- Loader -->
+        <div id="callLogLoader" class="flex items-center justify-center py-20">
+            <div class="text-center">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+                <p class="text-gray-500 mt-4 text-sm">جاري تحميل السجل...</p>
+            </div>
+        </div>
+        
+        <!-- Call Logs Container -->
+        <div id="callLogContainer" class="space-y-3 hidden"></div>
+        
+        <!-- Empty State -->
+        <div id="callLogEmpty" class="hidden flex flex-col items-center justify-center py-20">
+            <i class="ri-phone-line text-6xl text-gray-300 mb-4"></i>
+            <p class="text-gray-500 font-medium">لا توجد مكالمات</p>
+            <p class="text-gray-400 text-sm mt-2">ستظهر مكالماتك هنا</p>
+        </div>
+    </main>
+</div>
+
+<!-- صفحة الدردشة -->
+<div id="chatPage" class="w-full bg-white min-h-screen relative hidden">
+<!-- هيدر الدردشة -->
+<header class="fixed top-0 w-full bg-white z-50 px-4 py-3 border-b border-gray-100">
+<div class="flex items-center">
+<button id="backBtn" class="w-8 h-8 flex items-center justify-center ml-3 cursor-pointer !rounded-button">
+<i class="ri-arrow-right-line text-gray-700 text-lg"></i>
+</button>
+<div class="flex items-center flex-1">
+<img id="chatAvatar" src="" alt="" class="w-10 h-10 rounded-full object-cover ml-3 cursor-pointer">
+<div>
+<h2 id="chatUserName" class="font-semibold text-gray-900"></h2>
+<p class="text-xs text-secondary">متصل الآن</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button id="voiceCallBtn" class="w-8 h-8 flex items-center justify-center cursor-pointer !rounded-button">
+<i class="ri-phone-line text-gray-600 text-lg"></i>
+</button>
+<button id="videoCallBtn" class="w-8 h-8 flex items-center justify-center cursor-pointer !rounded-button">
+<i class="ri-vidicon-line text-gray-600 text-lg"></i>
+</button>
+<button id="moreOptionsBtn" class="w-8 h-8 flex items-center justify-center cursor-pointer !rounded-button">
+<i class="ri-more-line text-gray-600 text-lg"></i>
+</button>
+</div>
+</div>
+</header>
+<!-- منطقة الرسائل -->
+<main class="pt-20 pb-20 px-4 min-h-screen">
+<div id="messagesContainer" class="space-y-4 py-4">
+<!-- رسائل تجريبية -->
+<div class="flex justify-end">
+<div class="bg-primary text-white px-4 py-2 rounded-2xl rounded-bl-sm max-w-xs">
+<p class="text-sm">مرحباً، كيف حالك؟</p>
+<span class="text-xs opacity-75 block mt-1">14:30</span>
+</div>
+</div>
+<div class="flex justify-start">
+<div class="bg-gray-100 text-gray-900 px-4 py-2 rounded-2xl rounded-br-sm max-w-xs">
+<p class="text-sm">أهلاً وسهلاً! بخير والحمد لله</p>
+<span class="text-xs text-gray-500 block mt-1">14:32</span>
+</div>
+</div>
+<div class="flex justify-end">
+<div class="bg-primary text-white px-4 py-2 rounded-2xl rounded-bl-sm max-w-xs">
+<p class="text-sm">ممتاز، هل يمكننا التحدث عن المشروع؟</p>
+<span class="text-xs opacity-75 block mt-1">14:35</span>
+</div>
+</div>
+<div class="flex justify-start">
+<div class="bg-gray-100 text-gray-900 px-4 py-2 rounded-2xl rounded-br-sm max-w-xs">
+<p class="text-sm">بالطبع، أنا مستعد للنقاش</p>
+<span class="text-xs text-gray-500 block mt-1">14:37</span>
+</div>
+</div>
+</div>
+</main>
+<!-- منطقة الكتابة -->
+<div class="fixed bottom-0 w-full bg-white px-4 py-3">
+<div id="normalInputContainer" class="flex items-end gap-3">
+<div class="flex-1 bg-gray-50 rounded-full px-4 py-2 flex items-center gap-2">
+<button id="attachBtn" class="w-6 h-6 flex items-center justify-center text-gray-500 cursor-pointer">
+<i class="ri-add-line text-lg"></i>
+</button>
+<input id="messageInput" type="text" placeholder="اكتب رسالة..." class="flex-1 bg-transparent border-none outline-none text-sm">
+</div>
+<button id="voiceBtn" class="w-12 h-12 flex items-center justify-center bg-gray-100 text-primary rounded-full cursor-pointer shadow-sm hover:shadow-md transition-all duration-200">
+<i class="ri-mic-line text-xl"></i>
+</button>
+<button id="sendBtn" class="w-12 h-12 flex items-center justify-center bg-primary text-white rounded-full cursor-pointer hidden shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200">
+<i class="ri-send-plane-fill text-lg"></i>
+</button>
+</div>
+
+<!-- Blocked User Notice (when I am blocked) -->
+<div id="blockedNotice" class="hidden bg-red-50 border-t border-red-200 p-4 -mx-4 -my-3">
+    <div class="flex items-center justify-center gap-2 text-red-600">
+        <i class="ri-error-warning-line text-xl"></i>
+        <span class="text-sm font-medium">تم حظرك من قبل هذا المستخدم</span>
+    </div>
+</div>
+
+<!-- Block Actions (when I blocked them) -->
+<div id="blockActions" class="hidden bg-gray-50 border-t border-gray-200 p-4 -mx-4 -my-3">
+    <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2 text-gray-600">
+            <i class="ri-forbid-line text-xl"></i>
+            <span class="text-sm font-medium">لقد حظرت هذا المستخدم</span>
+        </div>
+        <button id="unblockBtn" class="px-4 py-2 bg-primary text-white rounded-xl text-sm font-medium !rounded-button">
+            فك الحظر
+        </button>
+    </div>
+</div>
+
+<!-- واجهة التسجيل الصوتي -->
+<div id="voiceRecordingContainer" class="hidden">
+<div class="flex items-center gap-3 relative">
+<!-- منطقة الحذف -->
+<div id="deleteZone" class="absolute right-0 top-1/2 transform -translate-y-1/2 w-16 h-16 bg-red-500 rounded-full flex items-center justify-center opacity-0 scale-75 transition-all duration-300">
+<i class="ri-delete-bin-line text-white text-xl"></i>
+</div>
+<!-- منطقة معلومات التسجيل -->
+<div class="flex-1 bg-red-50 rounded-full px-4 py-3 flex items-center gap-3 relative overflow-hidden">
+<!-- الخلفية المتحركة -->
+<div class="absolute inset-0 bg-gradient-to-r from-red-100 to-red-50 animate-pulse"></div>
+<div class="relative z-10 flex items-center gap-3 w-full">
+<!-- أيقونة الميكروفون المتحركة -->
+<div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center animate-pulse">
+<i class="ri-mic-fill text-white text-sm"></i>
+</div>
+<!-- مؤشر الصوت -->
+<div class="flex items-center gap-1">
+<div class="voice-indicator w-1 h-4 bg-red-400 rounded-full animate-bounce" style="animation-delay: 0s;"></div>
+<div class="voice-indicator w-1 h-6 bg-red-500 rounded-full animate-bounce" style="animation-delay: 0.1s;"></div>
+<div class="voice-indicator w-1 h-3 bg-red-400 rounded-full animate-bounce" style="animation-delay: 0.2s;"></div>
+<div class="voice-indicator w-1 h-5 bg-red-500 rounded-full animate-bounce" style="animation-delay: 0.3s;"></div>
+<div class="voice-indicator w-1 h-4 bg-red-400 rounded-full animate-bounce" style="animation-delay: 0.4s;"></div>
+</div>
+<!-- مؤقت التسجيل -->
+<span id="recordingTimer" class="text-red-600 font-mono text-sm ml-auto">00:00</span>
+</div>
+</div>
+<!-- زر الإيقاف والإرسال -->
+<button id="stopRecordingBtn" class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center text-white shadow-lg transform transition-all duration-200 hover:scale-105">
+<i class="ri-stop-fill text-xl"></i>
+</button>
+</div>
+<!-- نص الإرشاد -->
+<div class="text-center mt-2">
+<p class="text-xs text-gray-500 animate-fadeIn">اسحب لليسار للحذف أو اضغط لإيقاف التسجيل</p>
+</div>
+</div>
+</div>
+</div>
+<!-- قائمة خيارات الدردشة -->
+<div id="moreOptionsModal" class="fixed inset-0 z-50 hidden">
+<div class="absolute inset-0 bg-black bg-opacity-50" id="moreModalOverlay"></div>
+<div class="absolute bottom-0 w-full bg-white rounded-t-3xl p-6 transform translate-y-full transition-transform duration-300" id="moreOptionsSheet">
+<div class="w-12 h-1 bg-gray-300 rounded-full mx-auto mb-6"></div>
+<div class="space-y-1">
+<button class="more-option w-full flex items-center p-4 rounded-xl hover:bg-gray-50 cursor-pointer text-right" data-action="block">
+<div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center ml-3">
+<i class="ri-forbid-line text-orange-500 text-lg"></i>
+</div>
+<div class="flex-1">
+<h4 class="font-medium text-gray-900">حظر المستخدم</h4>
+<p class="text-sm text-gray-500">منع هذا المستخدم من مراسلتك</p>
+</div>
+</button>
+<button class="more-option w-full flex items-center p-4 rounded-xl hover:bg-gray-50 cursor-pointer text-right" data-action="report-user">
+<div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center ml-3">
+<i class="ri-alert-line text-red-500 text-lg"></i>
+</div>
+<div class="flex-1">
+<h4 class="font-medium text-gray-900">الإبلاغ عن المستخدم</h4>
+<p class="text-sm text-gray-500">تقديم بلاغ عن سلوك غير لائق</p>
+</div>
+</button>
+<button class="more-option w-full flex items-center p-4 rounded-xl hover:bg-gray-50 cursor-pointer text-right" data-action="report-chat">
+<div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center ml-3">
+<i class="ri-chat-delete-line text-yellow-600 text-lg"></i>
+</div>
+<div class="flex-1">
+<h4 class="font-medium text-gray-900">الإبلاغ عن الدردشة</h4>
+<p class="text-sm text-gray-500">تقديم بلاغ عن محتوى هذه المحادثة</p>
+</div>
+</button>
+</div>
+</div>
+</div>
+<!-- صفحة الملف الشخصي -->
+<div id="profilePage" class="w-full bg-white min-h-screen relative hidden">
+    <!-- Header with Cover Image -->
+    <header class="relative">
+        <div id="profileCoverImage" class="h-40 bg-gradient-to-br from-blue-400 to-purple-500">
+            <!-- Background image will be set via style -->
+        </div>
+        <button id="profileBackBtn" class="absolute top-4 right-4 w-10 h-10 bg-black bg-opacity-20 backdrop-blur-sm rounded-full flex items-center justify-center cursor-pointer !rounded-button">
+            <i class="ri-arrow-right-line text-white text-lg"></i>
+        </button>
+        <button id="logoutBtn" class="absolute top-4 left-4 w-10 h-10 bg-black bg-opacity-20 backdrop-blur-sm rounded-full flex items-center justify-center cursor-pointer !rounded-button">
+            <i class="ri-logout-box-line text-white text-lg"></i>
+        </button>
+    </header>
+
+    <!-- Profile Info -->
+    <div class="px-6 -mt-16 relative z-10">
+        <div class="text-center">
+            <img id="profileAvatar" src="" alt="Profile Avatar" class="w-32 h-32 rounded-full object-cover border-4 border-white shadow-lg mx-auto">
+            <h1 id="profileName" class="text-2xl font-bold text-gray-900 mt-4"></h1>
+            <p id="profileUserType" class="text-sm text-gray-500 mt-1"></p>
+        </div>
+    </div>
+
+    <!-- Main Content: Stats, Info, Media -->
+    <main class="px-6 py-6 space-y-6">
+        <!-- Stats -->
+        <div class="grid grid-cols-3 gap-4">
+            <div class="text-center p-4 bg-gray-50 rounded-xl">
+                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                    <i class="ri-message-3-line text-blue-500"></i>
+                </div>
+                <p id="profileMessagesCount" class="text-lg font-bold text-gray-900">0</p>
+                <p class="text-xs text-gray-500">رسالة</p>
+            </div>
+            <div class="text-center p-4 bg-gray-50 rounded-xl">
+                <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                    <i class="ri-image-line text-green-500"></i>
+                </div>
+                <p id="profileImagesCount" class="text-lg font-bold text-gray-900">0</p>
+                <p class="text-xs text-gray-500">صورة</p>
+            </div>
+            <div class="text-center p-4 bg-gray-50 rounded-xl">
+                <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                    <i class="ri-links-line text-purple-500"></i>
+                </div>
+                <p id="profileLinksCount" class="text-lg font-bold text-gray-900">0</p>
+                <p class="text-xs text-gray-500">رابط</p>
+            </div>
+        </div>
+
+        <!-- Info -->
+        <div class="space-y-4">
+            <div class="flex items-center p-4 bg-gray-50 rounded-xl">
+                <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center ml-3">
+                    <i class="ri-information-line text-gray-600"></i>
+                </div>
+                <div class="flex-1">
+                    <p class="font-medium text-gray-900">نبذة</p>
+                    <p id="profileDescription" class="text-sm text-gray-600 mt-1">لا توجد نبذة</p>
+                </div>
+            </div>
+            <div class="flex items-center p-4 bg-gray-50 rounded-xl">
+                <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center ml-3">
+                    <i class="ri-phone-line text-gray-600"></i>
+                </div>
+                <div class="flex-1">
+                    <p class="font-medium text-gray-900">رقم الهاتف</p>
+                    <p id="profilePhone" class="text-sm text-gray-600 mt-1" dir="ltr">غير متوفر</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="space-y-3">
+            <button id="profileSendMessageBtn" class="w-full flex items-center justify-center p-4 bg-primary text-white rounded-xl cursor-pointer !rounded-button">
+                <i class="ri-message-3-line ml-2"></i>
+                <span>إرسال رسالة</span>
+            </button>
+            <div class="grid grid-cols-2 gap-3">
+                <button class="flex items-center justify-center p-4 bg-gray-100 text-gray-700 rounded-xl cursor-pointer !rounded-button">
+                    <i class="ri-phone-line ml-2"></i>
+                    <span>اتصال صوتي</span>
+                </button>
+                <button class="flex items-center justify-center p-4 bg-gray-100 text-gray-700 rounded-xl cursor-pointer !rounded-button">
+                    <i class="ri-vidicon-line ml-2"></i>
+                    <span>اتصال مرئي</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Shared Media -->
+        <div class="space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-lg font-semibold text-gray-900">الوسائط المشتركة</h3>
+                <button id="showAllMediaBtn" class="text-primary text-sm hidden">عرض الكل</button>
+            </div>
+            <div id="profileSharedMedia" class="grid grid-cols-3 gap-2">
+                <!-- Media will be populated here -->
+            </div>
+        </div>
+    </main>
+</div>
+<!-- صفحة حسابي (كاملة) -->
+<div id="myProfilePage" class="w-full bg-white min-h-screen relative hidden">
+    <!-- Header with Cover Image -->
+    <header class="relative">
+        <div id="myProfileCoverImage" class="h-40 bg-gradient-to-br from-green-400 to-cyan-500">
+            <!-- A different gradient to distinguish it -->
+        </div>
+        <button id="myProfileBackBtn" class="absolute top-4 right-4 w-10 h-10 bg-black bg-opacity-20 backdrop-blur-sm rounded-full flex items-center justify-center cursor-pointer !rounded-button">
+            <i class="ri-arrow-right-line text-white text-lg"></i>
+        </button>
+        <button id="myProfileLogoutBtn" class="absolute top-4 left-4 w-10 h-10 bg-black bg-opacity-20 backdrop-blur-sm rounded-full flex items-center justify-center cursor-pointer !rounded-button">
+            <i class="ri-logout-box-line text-white text-lg"></i>
+        </button>
+    </header>
+
+    <!-- Profile Info -->
+    <div class="px-6 -mt-16 relative z-10">
+        <div class="text-center">
+            <img id="myProfileAvatar" src="" alt="My Profile Avatar" class="w-32 h-32 rounded-full object-cover border-4 border-white shadow-lg mx-auto">
+            <h1 id="myProfileName" class="text-2xl font-bold text-gray-900 mt-4"></h1>
+            <p id="myProfileEmail" class="text-sm text-gray-500 mt-1"></p>
+        </div>
+    </div>
+
+    <!-- Main Content: Stats, Info, Media -->
+    <main class="px-6 py-6 space-y-6">
+        <!-- Stats -->
+        <div class="grid grid-cols-3 gap-4">
+            <div class="text-center p-4 bg-gray-50 rounded-xl">
+                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                    <i class="ri-message-3-line text-blue-500"></i>
+                </div>
+                <p id="myProfileMessagesCount" class="text-lg font-bold text-gray-900">0</p>
+                <p class="text-xs text-gray-500">رسالة</p>
+            </div>
+            <div class="text-center p-4 bg-gray-50 rounded-xl">
+                <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                    <i class="ri-image-line text-green-500"></i>
+                </div>
+                <p id="myProfileImagesCount" class="text-lg font-bold text-gray-900">0</p>
+                <p class="text-xs text-gray-500">صورة</p>
+            </div>
+            <div class="text-center p-4 bg-gray-50 rounded-xl">
+                <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                    <i class="ri-links-line text-purple-500"></i>
+                </div>
+                <p id="myProfileLinksCount" class="text-lg font-bold text-gray-900">0</p>
+                <p class="text-xs text-gray-500">رابط</p>
+            </div>
+        </div>
+
+        <!-- Info -->
+        <div class="space-y-4">
+            <div class="flex items-center p-4 bg-gray-50 rounded-xl">
+                <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center ml-3">
+                    <i class="ri-information-line text-gray-600"></i>
+                </div>
+                <div class="flex-1">
+                    <p class="font-medium text-gray-900">نبذة</p>
+                    <p id="myProfileDescription" class="text-sm text-gray-600 mt-1">مستخدم نشط في التطبيق.</p>
+                </div>
+            </div>
+            <div class="flex items-center p-4 bg-gray-50 rounded-xl">
+                <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center ml-3">
+                    <i class="ri-phone-line text-gray-600"></i>
+                </div>
+                <div class="flex-1">
+                    <p class="font-medium text-gray-900">رقم الهاتف</p>
+                    <p id="myProfilePhone" class="text-sm text-gray-600 mt-1" dir="ltr">(غير متوفر)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shared Media -->
+        <div class="space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-lg font-semibold text-gray-900">الوسائط الخاصة بي</h3>
+            </div>
+            <div id="myProfileSharedMedia" class="grid grid-cols-3 gap-2">
+                <!-- My media will be populated here -->
+            </div>
+        </div>
+    </main>
+</div>
+<!-- صفحة المكالمة الصوتية -->
+<div id="voiceCallPage" class="w-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 min-h-screen relative hidden">
+<div class="absolute inset-0 bg-black bg-opacity-30"></div>
+<div class="relative z-10 flex flex-col items-center justify-center min-h-screen px-6">
+<!-- حالة المكالمة -->
+<div class="text-center mb-8">
+<div class="relative mb-6">
+<div class="w-32 h-32 rounded-full bg-white bg-opacity-10 backdrop-blur-sm flex items-center justify-center mb-4 mx-auto animate-pulse">
+<img id="voiceCallAvatar" src="" alt="" class="w-28 h-28 rounded-full object-cover">
+</div>
+<div class="absolute -inset-4 rounded-full border-2 border-white border-opacity-30 animate-ping"></div>
+<div class="absolute -inset-8 rounded-full border border-white border-opacity-20 animate-ping" style="animation-delay: 0.5s;"></div>
+</div>
+<h2 id="voiceCallUserName" class="text-2xl font-bold text-white mb-2 animate-fadeIn"></h2>
+<p class="text-white text-opacity-70 animate-fadeIn" style="animation-delay: 0.3s;">جاري الاتصال...</p>
+<div class="flex items-center justify-center mt-4 animate-fadeIn" style="animation-delay: 0.6s;">
+<div class="flex space-x-1 rtl:space-x-reverse">
+<div class="w-2 h-2 bg-secondary rounded-full animate-bounce"></div>
+<div class="w-2 h-2 bg-secondary rounded-full animate-bounce" style="animation-delay: 0.1s;"></div>
+<div class="w-2 h-2 bg-secondary rounded-full animate-bounce" style="animation-delay: 0.2s;"></div>
+</div>
+</div>
+</div>
+<!-- أزرار التحكم -->
+<div class="flex items-center justify-center space-x-8 rtl:space-x-reverse">
+<button id="voiceCallMute" class="w-16 h-16 bg-white bg-opacity-20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-opacity-30 transition-all duration-200 transform hover:scale-105">
+<i class="ri-mic-line text-2xl"></i>
+</button>
+<button id="voiceCallEnd" class="w-20 h-20 bg-red-500 rounded-full flex items-center justify-center text-white shadow-lg hover:bg-red-600 transition-all duration-200 transform hover:scale-105">
+<i class="ri-phone-line text-2xl rotate-135"></i>
+</button>
+<button id="voiceCallSpeaker" class="w-16 h-16 bg-white bg-opacity-20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-opacity-30 transition-all duration-200 transform hover:scale-105">
+<i class="ri-volume-up-line text-2xl"></i>
+</button>
+</div>
+</div>
+</div>
+<!-- صفحة المكالمة المرئية -->
+<div id="videoCallPage" class="w-full bg-black min-h-screen relative hidden">
+<!-- فيديو المستخدم البعيد -->
+<div class="absolute inset-0 bg-gradient-to-br from-gray-900 to-gray-800">
+<img id="videoCallBg" src="" alt="" class="w-full h-full object-cover opacity-20">
+<div class="absolute inset-0 bg-black bg-opacity-40"></div>
+</div>
+<!-- فيديو المستخدم المحلي -->
+<div class="absolute top-6 left-6 w-28 h-36 bg-gray-800 rounded-2xl overflow-hidden border-2 border-white border-opacity-30 z-20">
+<img src="https://readdy.ai/api/search-image?query=Professional%20headshot%20selfie%20style%2C%20young%20person%20looking%20at%20camera%2C%20natural%20lighting%2C%20smartphone%20camera%20perspective&width=120&height=150&seq=self-video&orientation=portrait" alt="أنت" class="w-full h-full object-cover">
+</div>
+<!-- معلومات المكالمة -->
+<div class="absolute top-6 right-6 left-40 z-20">
+<div class="text-right">
+<h3 id="videoCallUserName" class="text-white text-lg font-bold animate-fadeIn"></h3>
+<div class="flex items-center justify-end mt-1 animate-fadeIn" style="animation-delay: 0.3s;">
+<span class="text-white text-opacity-70 text-sm">جاري الاتصال</span>
+<div class="w-2 h-2 bg-secondary rounded-full mr-2 animate-pulse"></div>
+</div>
+</div>
+</div>
+<!-- صورة المستخدم البعيد -->
+<div class="absolute inset-0 flex items-center justify-center z-10">
+<div class="text-center">
+<div class="relative mb-6">
+<div class="w-40 h-40 rounded-full bg-white bg-opacity-10 backdrop-blur-sm flex items-center justify-center mx-auto">
+<img id="videoCallAvatar" src="" alt="" class="w-36 h-36 rounded-full object-cover">
+</div>
+<div class="absolute -inset-4 rounded-full border-2 border-white border-opacity-30 animate-ping"></div>
+<div class="absolute -inset-8 rounded-full border border-white border-opacity-20 animate-ping" style="animation-delay: 0.5s;"></div>
+</div>
+</div>
+</div>
+<!-- أزرار التحكم -->
+<div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
+<div class="flex items-center justify-center space-x-6 rtl:space-x-reverse">
+<button id="videoCallMute" class="w-14 h-14 bg-white bg-opacity-20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-opacity-30 transition-all duration-200 transform hover:scale-105">
+<i class="ri-mic-line text-xl"></i>
+</button>
+<button id="videoCallEnd" class="w-18 h-18 bg-red-500 rounded-full flex items-center justify-center text-white shadow-lg hover:bg-red-600 transition-all duration-200 transform hover:scale-105">
+<i class="ri-phone-line text-2xl rotate-135"></i>
+</button>
+<button id="videoCallCamera" class="w-14 h-14 bg-white bg-opacity-20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-opacity-30 transition-all duration-200 transform hover:scale-105">
+<i class="ri-vidicon-line text-xl"></i>
+</button>
+<button id="videoCallSwitch" class="w-14 h-14 bg-white bg-opacity-20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-opacity-30 transition-all duration-200 transform hover:scale-105">
+<i class="ri-camera-switch-line text-xl"></i>
+</button>
+</div>
+</div>
+</div>
+<!-- قائمة المرفقات -->
+<div id="attachmentModal" class="fixed inset-0 z-50 hidden">
+<div class="absolute inset-0 bg-black bg-opacity-50" id="modalOverlay"></div>
+<div class="absolute bottom-0 w-full bg-white rounded-t-3xl p-6 transform translate-y-full transition-transform duration-300" id="attachmentSheet">
+<div class="w-12 h-1 bg-gray-300 rounded-full mx-auto mb-6"></div>
+<h3 class="text-lg font-semibold text-gray-900 mb-6 text-center">إرسال مرفق</h3>
+<div class="grid grid-cols-3 gap-6">
+<button class="attachment-option flex flex-col items-center p-4 rounded-xl hover:bg-gray-50 cursor-pointer">
+<div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mb-2">
+<i class="ri-map-pin-line text-red-500 text-xl"></i>
+</div>
+<span class="text-sm text-gray-700">الموقع</span>
+</button>
+<button class="attachment-option flex flex-col items-center p-4 rounded-xl hover:bg-gray-50 cursor-pointer" data-action="pick-image">
+<div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-2">
+<i class="ri-image-line text-blue-500 text-xl"></i>
+</div>
+<span class="text-sm text-gray-700">الصور</span>
+</button>
+<button class="attachment-option flex flex-col items-center p-4 rounded-xl hover:bg-gray-50 cursor-pointer" data-action="pick-video">
+<div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-2">
+<i class="ri-vidicon-line text-purple-500 text-xl"></i>
+</div>
+<span class="text-sm text-gray-700">الفيديو</span>
+</button>
+<button class="attachment-option flex flex-col items-center p-4 rounded-xl hover:bg-gray-50 cursor-pointer">
+<div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-2">
+<i class="ri-folder-line text-green-500 text-xl"></i>
+</div>
+<span class="text-sm text-gray-700">الملفات</span>
+</button>
+<button class="attachment-option flex flex-col items-center p-4 rounded-xl hover:bg-gray-50 cursor-pointer">
+<div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-2">
+<i class="ri-file-text-line text-orange-500 text-xl"></i>
+</div>
+<span class="text-sm text-gray-700">المستندات</span>
+</button>
+<button class="attachment-option flex flex-col items-center p-4 rounded-xl hover:bg-gray-50 cursor-pointer">
+<div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mb-2">
+<i class="ri-contacts-line text-yellow-600 text-xl"></i>
+</div>
+<span class="text-sm text-gray-700">جهة اتصال</span>
+</button>
+</div>
+</div>
+</div>
+
+<!-- صفحة معاينة وإرسال الصورة (WhatsApp Style) -->
+<div id="imagePreviewPage" class="fixed inset-0 z-[100] bg-black hidden flex flex-col">
+    <!-- Header for closing -->
+    <header class="w-full p-4 flex items-center justify-start z-10">
+        <button id="closePreviewBtn" class="w-10 h-10 flex items-center justify-center text-white text-2xl bg-black bg-opacity-20 rounded-full hover:bg-opacity-40 transition-colors !rounded-button">
+            <i class="ri-close-line"></i>
+        </button>
+    </header>
+
+    <!-- Image container (takes up remaining space) -->
+    <main class="flex-1 flex items-center justify-center p-4 overflow-hidden -mt-16">
+        <img id="previewImage" src="" alt="معاينة الصورة" class="max-w-full max-h-full object-contain">
+    </main>
+
+    <!-- Footer for caption and send -->
+    <footer class="w-full p-4 flex items-end gap-3 z-10">
+        <div class="flex-1 bg-gray-900 bg-opacity-70 backdrop-blur-sm rounded-full px-4 py-2 flex items-center gap-3">
+            <input id="imageCaptionInput" type="text" placeholder="إضافة تعليق..." class="flex-1 bg-transparent border-none outline-none text-white placeholder-gray-400 text-sm">
+        </div>
+        <button id="sendImageBtn" class="w-12 h-12 flex items-center justify-center bg-secondary text-white rounded-full cursor-pointer shadow-lg transform transition-transform hover:scale-105">
+            <i class="ri-send-plane-fill text-lg"></i>
+        </button>
+    </footer>
+</div>
+
+<!-- صفحة معاينة وإرسال الفيديو -->
+<div id="videoPreviewPage" class="fixed inset-0 z-[100] bg-black hidden flex flex-col">
+    <!-- Header for closing -->
+    <header class="w-full p-4 flex items-center justify-start z-10">
+        <button id="closeVideoPreviewBtn" class="w-10 h-10 flex items-center justify-center text-white text-2xl bg-black bg-opacity-20 rounded-full hover:bg-opacity-40 transition-colors !rounded-button">
+            <i class="ri-close-line"></i>
+        </button>
+    </header>
+
+    <!-- Video container -->
+    <main class="flex-1 flex items-center justify-center p-4 overflow-hidden -mt-16">
+        <video id="previewVideo" src="" alt="معاينة الفيديو" class="max-w-full max-h-full object-contain" controls autoplay muted loop></video>
+    </main>
+
+    <!-- Footer for caption and send -->
+    <footer class="w-full p-4 flex items-end gap-3 z-10">
+        <div class="flex-1 bg-gray-900 bg-opacity-70 backdrop-blur-sm rounded-full px-4 py-2 flex items-center gap-3">
+            <input id="videoCaptionInput" type="text" placeholder="إضافة تعليق..." class="flex-1 bg-transparent border-none outline-none text-white placeholder-gray-400 text-sm">
+        </div>
+        <button id="sendVideoBtn" class="w-12 h-12 flex items-center justify-center bg-secondary text-white rounded-full cursor-pointer shadow-lg transform transition-transform hover:scale-105">
+            <i class="ri-send-plane-fill text-lg"></i>
+        </button>
+    </footer>
+</div>
+
+<!-- Full Screen Loading Overlay -->
+<div id="fullScreenLoader" class="fixed inset-0 z-[200] bg-black bg-opacity-50 backdrop-blur-sm flex flex-col items-center justify-center hidden">
+    <div class="flex items-center space-x-2 rtl:space-x-reverse">
+        <div class="w-3 h-3 bg-white rounded-full animate-bounce" style="animation-delay: 0s;"></div>
+        <div class="w-3 h-3 bg-white rounded-full animate-bounce" style="animation-delay: 0.1s;"></div>
+        <div class="w-3 h-3 bg-white rounded-full animate-bounce" style="animation-delay: 0.2s;"></div>
+    </div>
+    <p id="loaderText" class="text-white text-lg mt-4 font-medium">جاري تسجيل الدخول...</p>
+</div>
+
+<!-- All Media Page -->
+<div id="allMediaPage" class="w-full bg-white min-h-screen relative hidden flex flex-col">
+    <!-- Header -->
+    <header class="fixed top-0 w-full bg-white z-50 px-4 py-3 border-b border-gray-100 flex items-center">
+        <button id="allMediaBackBtn" class="w-8 h-8 flex items-center justify-center ml-3 cursor-pointer !rounded-button">
+            <i class="ri-arrow-right-line text-gray-700 text-lg"></i>
+        </button>
+        <h2 class="font-semibold text-gray-900">الوسائط المشتركة</h2>
+    </header>
+    <!-- Media Grid -->
+    <main class="pt-20 pb-4 px-4 flex-1 overflow-y-auto">
+        <div id="allMediaGrid" class="grid grid-cols-3 gap-1">
+            <!-- All media images will be populated here -->
+        </div>
+    </main>
+</div>
+
+<!-- قائمة خيارات الرسالة -->
+<div id="messageOptionsModal" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black bg-opacity-50" id="messageOptionsOverlay"></div>
+    <div class="absolute bottom-0 w-full bg-white rounded-t-3xl p-6 transform translate-y-full transition-transform duration-300" id="messageOptionsSheet">
+        <div class="w-12 h-1 bg-gray-300 rounded-full mx-auto mb-6"></div>
+        <div id="messageOptionsContainer" class="space-y-1">
+            <!-- Options will be dynamically inserted here -->
+        </div>
+    </div>
+</div>
+
+<!-- قائمة الإبلاغ عن مستخدم -->
+<div id="reportUserModal" class="fixed inset-0 z-[60] hidden">
+    <div class="absolute inset-0 bg-black bg-opacity-50" id="reportUserOverlay"></div>
+    <div class="absolute bottom-0 w-full bg-white rounded-t-3xl p-6 transform translate-y-full transition-transform duration-300" id="reportUserSheet">
+        <div class="w-12 h-1 bg-gray-300 rounded-full mx-auto mb-4"></div>
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-semibold text-gray-900">الإبلاغ عن المستخدم</h3>
+            <button id="closeReportUserBtn" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-gray-100 rounded-full !rounded-button">
+                <i class="ri-close-line text-xl"></i>
+            </button>
+        </div>
+        <p class="text-sm text-gray-600 mb-4">يرجى وصف المشكلة التي تواجهها مع هذا المستخدم. سيتم مراجعة بلاغك من قبل فريق الدعم.</p>
+        <textarea id="reportUserTextarea" rows="5" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="اكتب سبب البلاغ هنا..."></textarea>
+        <button id="sendReportBtn" class="w-full mt-4 flex items-center justify-center p-4 bg-primary text-white font-bold rounded-xl cursor-pointer !rounded-button">
+            <div class="btn-content flex items-center">
+                <i class="ri-send-plane-fill ml-2"></i>
+                <span>إرسال البلاغ</span>
+            </div>
+            <div class="loader hidden flex items-center">
+                <div class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin ml-2"></div>
+                <span>جاري الإرسال...</span>
+            </div>
+        </button>
+    </div>
+</div>
+
+<!-- NEW: Edit Message Dialog -->
+<div id="editMessageDialog" class="fixed inset-0 z-[70] bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center hidden p-4">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-sm shadow-xl transform transition-all" style="animation: fadeIn 0.3s ease-out;">
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">تعديل الرسالة</h3>
+        <textarea id="editMessageInput" rows="4" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="اكتب رسالتك المعدلة..."></textarea>
+        <div class="grid grid-cols-2 gap-3 mt-4">
+            <button id="cancelEditBtn" class="w-full p-3 bg-gray-100 text-gray-700 font-bold rounded-xl cursor-pointer !rounded-button">
+                <span>إلغاء</span>
+            </button>
+            <button id="confirmEditBtn" class="w-full p-3 bg-primary text-white font-bold rounded-xl cursor-pointer !rounded-button">
+                <span>حفظ التعديلات</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
