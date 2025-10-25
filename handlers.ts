@@ -1324,8 +1324,6 @@ export async function handleReportChat(targetId: string) {
     }
 }
 
-}
-
 // --- NEW: Call Log Badge Functions ---
 
 /**

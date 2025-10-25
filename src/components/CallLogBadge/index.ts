@@ -1,0 +1,2 @@
+export { CallLogBadge } from './CallLogBadge';
+
